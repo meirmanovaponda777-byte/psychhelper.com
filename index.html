@@ -1,35 +1,67 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Психологический помощник</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>PsychHelp</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-    <h1>Психологический помощник</h1>
-    <p>Чат для предсессий и самопомощи</p>
-</header>
+<div class="container">
 
-<main>
-    <div id="chatBox">
-        <!-- Сообщения будут здесь -->
+    <!-- HERO -->
+    <div class="hero">
+        <h1>PsychHelp</h1>
+        <p>Онлайн-помощник для самопомощи, саморефлексии и подготовки к психологическим сессиям</p>
+        <button onclick="window.location.href='chat.html'">Начать чат</button>
     </div>
-    <div id="inputWrapper">
-        <input type="text" id="userInput" placeholder="Напишите сообщение..." />
-        <button id="sendBtn">Отправить</button>
+
+    <!-- СЕКЦИЯ ДЛЯ КЛИЕНТОВ -->
+    <div class="section-title">Для клиентов</div>
+    <div class="features">
+
+        <div class="card">
+            <h3>Анонимно</h3>
+            <p>Безопасно выражайте свои мысли и эмоции. Никакие личные данные не сохраняются.</p>
+        </div>
+
+        <div class="card">
+            <h3>Доступно 24/7</h3>
+            <p>Чат работает круглосуточно, чтобы вы могли получить поддержку в любое время.</p>
+        </div>
+
+        <div class="card">
+            <h3>Саморефлексия</h3>
+            <p>Анализируйте свои реакции, эмоции и ситуации для повышения осознанности.</p>
+        </div>
+
     </div>
-</main>
 
-<footer>
-    <p>© 2026 Estella. Все права защищены</p>
-</footer>
+    <!-- СЕКЦИЯ ДЛЯ СПЕЦИАЛИСТОВ -->
+    <div class="section-title">Для специалистов</div>
+    <div class="features">
 
-<script src="script.js"></script>
+        <div class="card">
+            <h3>Диагностика</h3>
+            <p>Инструменты помогают выявлять трудности и паттерны клиентов для работы с ними.</p>
+        </div>
+
+        <div class="card">
+            <h3>Аналитика</h3>
+            <p>Структурирование обращений и подготовка материалов для терапевтических сессий.</p>
+        </div>
+
+        <div class="card">
+            <h3>Удалённая поддержка</h3>
+            <p>Используйте чат для удалённых консультаций и повышения эффективности терапии.</p>
+        </div>
+
+    </div>
+
+    <div class="footer">© 2026 Estella</div>
+
+</div>
+
 </body>
 </html>
