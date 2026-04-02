@@ -1,175 +1,181 @@
-/* =================== */
-/*   БАЗОВЫЙ СТИЛЬ     */
-/* =================== */
+/* ========================================= */
+/* 1. ОБЩИЕ СТИЛИ СТРАНИЦЫ                   */
+/* ========================================= */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: #1f1f23;
+    /* Глубокий градиент на фоне всей страницы */
+    background: radial-gradient(circle at top right, #2c3e50, #1a1a1d);
     color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 
-/* =================== */
-/*   КОНТЕЙНЕР ЧАТА    */
-/* =================== */
+/* ========================================= */
+/* 2. КОНТЕЙНЕР ЧАТА (ЭФФЕКТ СТЕКЛА)         */
+/* ========================================= */
 .chat-container {
-    width: 420px;
+    width: 450px;
+    height: 85vh; /* Адаптивная высота */
     max-width: 95%;
-    background: #2a2a30;
-    border-radius: 16px;
+    background: rgba(42, 42, 48, 0.7);
+    backdrop-filter: blur(20px); 
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-    animation: fadeSlide 0.8s ease-out;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+    animation: fadeSlide 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* =================== */
-/*        HEADER       */
-/* =================== */
+/* ========================================= */
+/* 3. ШАПКА (HEADER)                         */
+/* ========================================= */
 .chat-header {
-    padding: 22px;
-    background: #1e1e24;
-    text-align: center;
-    border-bottom: 1px solid #3a3a42;
+    padding: 30px 25px;
+    background: transparent;
+    text-align: left;
 }
 
 .chat-header h2 {
     margin: 0;
-    font-size: 22px;
-    color: #ffffff;
-    font-weight: 700;
+    font-size: 24px;
+    /* Градиентный текст заголовка */
+    background: linear-gradient(90deg, #7fbcaa, #5f9ed1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
 }
 
 .chat-header p {
-    margin: 6px 0 0 0;
-    font-size: 13px;
-    opacity: 0.7;
+    margin: 5px 0 0 0;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.4;
 }
 
-/* =================== */
-/*       CHAT BOX      */
-/* =================== */
+/* ========================================= */
+/* 4. ОКНО СООБЩЕНИЙ                         */
+/* ========================================= */
 .chat-box {
     flex: 1;
-    padding: 18px;
+    padding: 25px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 20px;
+    background: transparent;
     scroll-behavior: smooth;
-    background: #2f2f36;
 }
 
-/* =================== */
-/*     СООБЩЕНИЯ       */
-/* =================== */
+/* Общий стиль сообщения */
 .message {
-    max-width: 78%;
-    padding: 14px 20px;
-    border-radius: 16px;
+    max-width: 85%;
+    padding: 16px 22px;
+    font-size: 14px;
     line-height: 1.6;
-    font-size: 15px;
-    word-break: break-word;
-    opacity: 0;
-    animation: fadeIn 0.3s forwards;
-    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    animation: messagePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-/* Сообщение клиента */
+/* СООБЩЕНИЕ КЛИЕНТА (Твое улучшенное облако) */
 .user-message {
     align-self: flex-end;
-    background: #5f9ed1;  /* пастельный голубой */
+    /* Красивый градиент подложки */
+    background: linear-gradient(135deg, #6ab5e9 0%, #5f9ed1 100%);
     color: #ffffff;
-    border-bottom-right-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    /* Форма облачка с "хвостиком" справа */
+    border-radius: 22px 22px 4px 22px;
+    /* Эффект объема: внешняя тень + внутренний блик сверху */
+    box-shadow: 
+        0 8px 20px rgba(95, 158, 209, 0.3), 
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    border: none;
 }
 
-/* Сообщение ассистента */
+/* СООБЩЕНИЕ БОТА */
 .bot-message {
     align-self: flex-start;
-    background: #343541;
-    color: #ffffff;
-    border: 1px solid #4a4b50;
-    border-bottom-left-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: #f0f0f0;
+    /* Форма облачка с "хвостиком" слева */
+    border-radius: 22px 22px 22px 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* =================== */
-/*        INPUT        */
-/* =================== */
+/* ========================================= */
+/* 5. ПОЛЕ ВВОДА (ПЛАВАЮЩЕЕ)                 */
+/* ========================================= */
 .chat-input {
+    margin: 20px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
-    border-top: 1px solid #3a3a42;
-    background: #2a2a30;
+    align-items: center;
+    transition: border-color 0.3s;
+}
+
+.chat-input:focus-within {
+    border-color: rgba(127, 188, 170, 0.5);
 }
 
 .chat-input input {
     flex: 1;
-    padding: 14px 16px;
+    padding: 12px 20px;
     border: none;
-    background: #1e1e24;
+    background: transparent;
     color: white;
-    font-size: 14px;
     outline: none;
-    border-radius: 0 0 0 16px;
-    transition: background 0.3s;
+    font-family: inherit;
 }
 
-.chat-input input:focus {
-    background: #292931;
-}
-
-/* Кнопка отправки */
 .chat-input button {
-    padding: 0 22px;
-    background: #7fbcaa; /* приятный пастельный акцент */
+    width: 48px;
+    height: 48px;
+    background: #7fbcaa;
     border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
     cursor: pointer;
-    font-weight: 600;
-    transition: transform 0.2s, box-shadow 0.3s;
-    color: #fff;
-    border-radius: 0 0 16px 0;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .chat-input button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 18px rgba(127,188,170,0.4);
+    transform: scale(1.1) rotate(-10deg);
+    background: #a2d9c9;
+    box-shadow: 0 5px 15px rgba(127, 188, 170, 0.4);
 }
 
-/* =================== */
-/*  ПЛАВНЫЕ АНИМАЦИИ  */
-/* =================== */
-@keyframes fadeIn {
-    to { opacity: 1; transform: translateY(0); }
+/* ========================================= */
+/* 6. АНИМАЦИИ И СКРОЛЛ                      */
+/* ========================================= */
+@keyframes messagePop {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(20px);}
-    to { opacity: 1; transform: translateY(0);}
+    from { opacity: 0; transform: translateY(30px); filter: blur(5px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
-/* =================== */
-/*   ДЕТАЛИ UX/SCROLL  */
-/* =================== */
+/* Тонкий красивый скроллбар */
 .chat-box::-webkit-scrollbar {
-    width: 6px;
-}
-
-.chat-box::-webkit-scrollbar-track {
-    background: #2a2a30;
-    border-radius: 3px;
+    width: 4px;
 }
 
 .chat-box::-webkit-scrollbar-thumb {
-    background: #7fbcaa;
-    border-radius: 3px;
-    transition: background 0.3s;
-}
-
-.chat-box::-webkit-scrollbar-thumb:hover {
-    background: #5f9988;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
 }

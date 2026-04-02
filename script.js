@@ -2,7 +2,7 @@ const chatBox = document.getElementById("chatBox");
 const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// ===== БЛОКИ ВОПРОСОВ =====
+// ===== БЛОКИ ВОПРОСОВ (ТВОИ ОРИГИНАЛЬНЫЕ) =====
 const blocks = [
     {
         title: "Блок 1. Контекст и повод обращения",
@@ -45,20 +45,12 @@ const blocks = [
     }
 ];
 
-// ===== УНИВЕРСАЛЬНЫЕ ТЕРАПЕВТИЧЕСКИЕ РЕАКЦИИ =====
 const reactions = [
     "Я слышу, сколько важного стоит за вашими словами. Спасибо, что доверяете это мне.",
     "Это действительно непросто – признавать такие вещи. Я ценю вашу готовность говорить об этом открыто.",
     "Понимаю, как это состояние может давить. То, что вы его замечаете и описываете – уже огромный шаг.",
     "Слышу, как вам сейчас неспокойно. Это заслуживает большого внимания и бережного отношения.",
-    "Спасибо за искренность. Похоже, сейчас вам приходится тратить много сил, чтобы справляться с этим.",
-    "Я внимательно читаю то, что вы пишете. В этих словах чувствуется много ценного для нашей работы.",
-    "Понимаю, что поднимать такие темы может быть нелегко. Ваша открытость очень важна.",
-    "Слышу вас. Ваши слова помогают мне лучше увидеть общую картину того, что с вами происходит.",
-    "Это важное признание. Похоже, вы долгое время несли это в себе, и сейчас это наконец находит выход.",
-    "Я чувствую, насколько это значимая для вас тема. Спасибо, что находите силы описывать это детально.",
-    "Похоже, вы проходите через действительно непростой период. Важно, что вы даете этому место здесь.",
-    "Ваши слова звучат очень весомо. Это дает нам хорошую опору для дальнейшего разбора."
+    "Спасибо за искренность. Похоже, сейчас вам приходится тратить много сил, чтобы справляться с этим."
 ];
 
 // ===== СОСТОЯНИЕ =====
@@ -66,20 +58,26 @@ let currentBlockIndex = 0;
 let currentQuestionIndex = 0;
 let sessionHistory = []; 
 
-// ===== ВЫВОД СООБЩЕНИЙ =====
+// ===== ВЫВОД СООБЩЕНИЙ (С ПОДДЕРЖКОЙ ОБЛАКОВ) =====
 function addMessage(text, sender = "ai") {
     const msg = document.createElement("div");
-    msg.style.margin = "10px 0";
-
+    
+    // Добавляем классы для CSS
+    msg.classList.add("message");
     if (sender === "ai") {
-        msg.innerHTML = `<b>ИИ:</b> ${text}`;
+        msg.classList.add("bot-message");
     } else {
-        msg.innerHTML = `<b>Вы:</b> ${text}`;
-        msg.style.textAlign = "right";
+        msg.classList.add("user-message");
     }
 
+    msg.innerHTML = text;
     chatBox.appendChild(msg);
-    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    // Плавная прокрутка
+    chatBox.scrollTo({
+        top: chatBox.scrollHeight,
+        behavior: 'smooth'
+    });
 }
 
 function getRandom(arr) {
@@ -98,7 +96,15 @@ function askNextQuestion() {
 
     const block = blocks[currentBlockIndex];
     if (currentQuestionIndex === 0) {
-        addMessage(`<i>— ${block.title} —</i>`);
+        // Системная плашка заголовка блока
+        const systemMsg = document.createElement("div");
+        systemMsg.style.textAlign = "center";
+        systemMsg.style.fontSize = "11px";
+        systemMsg.style.opacity = "0.4";
+        systemMsg.style.margin = "15px 0";
+        systemMsg.style.letterSpacing = "1px";
+        systemMsg.innerHTML = `— ${block.title} —`;
+        chatBox.appendChild(systemMsg);
     }
     addMessage(block.questions[currentQuestionIndex]);
 }
@@ -112,14 +118,13 @@ function handleInput() {
 
     // 1. Список стоп-слов
     const stopWords = [
-        "да", "нет", "ок", "окэй", "угу", "мгм", "ага", "хорошо", "понятно", 
+        "да", "нет", "ок", "окей", "угу", "мгм", "ага", "хорошо", "понятно", 
         "не знаю", "не помню", "сложно сказать", "трудно ответить", "без понятия", "хз", "не уверен",
         "нормально", "обычно", "как всегда", "как у всех", "по-разному", "ничего особенного", 
-        "все плохо", "все хорошо", "стандартно", "средне",
-        "эээ", "ну", "типа", "в общем", "как бы"
+        "все плохо", "все хорошо", "стандартно", "средне", "эээ", "ну", "типа", "в общем", "как бы"
     ];
 
-    // 2. Глубокая проверка на содержательность
+    // 2. Проверка на содержательность (ТВОЯ ЛОГИКА)
     const isShort = text.length < 15;
     const isGeneric = stopWords.includes(text.toLowerCase());
 
@@ -128,14 +133,7 @@ function handleInput() {
             const deepPrompts = [
                 "Я слышу вас, но мне очень важно увидеть чуть больше деталей. Попробуйте описать ваши чувства подробнее?",
                 "Это ценное наблюдение. Если попробовать заглянуть чуть глубже – как это состояние откликается в вашей жизни прямо сейчас?",
-                "Спасибо за этот ответ. Чтобы я могла лучше прочувствовать вашу ситуацию, добавьте, пожалуйста, еще пару предложений.",
-                "Мне важно понять нюансы того, о чём вы говорите. Расскажите чуть больше: что именно вы имеете в виду?",
-                "Похоже, об этом непросто говорить. Попробуйте подобрать слова и описать подробнее, что происходит внутри вас?",
-                "Я чувствую, что за этими словами стоит нечто большее. Позвольте себе развернуть эту мысль чуть шире.",
-                "Ваш ответ важен, но он звучит очень кратко. Расскажите немного о контексте: как это проявляется чаще всего?",
-                "Чтобы наше исследование было эффективным, мне нужно больше ваших описаний. Попробуйте дополнить ответ деталями.",
-                "Слышу вас. А если попробовать описать это состояние через телесные ощущения или образы? Что приходит в голову?",
-                "Кажется, мы коснулись чего-то значимого. Попробуйте не торопиться и описать этот момент чуть детальнее."
+                "Спасибо за этот ответ. Чтобы я могла лучше прочувствовать вашу ситуацию, добавьте, пожалуйста, еще пару предложений."
             ];
             addMessage(getRandom(deepPrompts));
         }, 600);
@@ -149,13 +147,12 @@ function handleInput() {
         answer: text
     });
 
-    // 4. Универсальная реакция
+    // 4. Реакция
     const reactionText = getRandom(reactions);
     addMessage(reactionText);
 
     currentQuestionIndex++;
 
-    // Переход к следующему вопросу
     if (currentQuestionIndex < blocks[currentBlockIndex].questions.length) {
         setTimeout(askNextQuestion, 1200);
     } else {
@@ -163,7 +160,6 @@ function handleInput() {
     }
 }
 
-// Резюме после блока
 function showBlockSummary() {
     const blockTitle = blocks[currentBlockIndex].title;
     const blockAnswers = sessionHistory.filter(item => item.blockTitle === blockTitle);
@@ -172,7 +168,7 @@ function showBlockSummary() {
     blockAnswers.forEach(item => {
         summary += `– ${item.answer}<br>`;
     });
-    summary += "<i>Спасибо за честность, это помогает лучше понять ситуацию.</i>";
+    summary += "<br><i>Спасибо за честность.</i>";
 
     addMessage(summary);
 
@@ -186,12 +182,10 @@ function showBlockSummary() {
     }
 }
 
-// Финальный результат
 function showFinalSummary() {
     addMessage("<b>Предсессия завершена. Благодарю вас за честные ответы.</b>");
 
     let finalReport = `<b>ИТОГОВЫЙ РЕЗУЛЬТАТ ПРЕДСЕССИИ:</b><br>---------------------------<br>`;
-
     blocks.forEach(block => {
         const answers = sessionHistory.filter(item => item.blockTitle === block.title);
         if (answers.length > 0) {
@@ -203,12 +197,9 @@ function showFinalSummary() {
         }
     });
 
-    finalReport += `<br>Это описание отражает ваше текущее состояние и станет основой для нашей дальнейшей работы.`;
-
     addMessage(finalReport);
 }
 
-// ===== СОБЫТИЯ =====
 sendBtn.addEventListener("click", handleInput);
 input.addEventListener("keypress", (e) => {
     if (e.key === "Enter") handleInput();
