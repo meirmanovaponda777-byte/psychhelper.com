@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "/chat"
+  to = "/chat.html"
+  status = 200
+
+[build.processing]
+  skip_node_js = true
+
+[build.processing.html]
+  pretty_urls = true
